@@ -1,0 +1,22 @@
+module.exports = {
+  base: '/Will-Blog/',
+  title: 'Will-Blog',
+  description: 'Vuepress blog demo',
+  theme: 'reco',
+  themeConfig: {
+    // 博客配置
+   blogConfig: {
+     category: {
+       location: 2,     // 在导航栏菜单中所占的位置，默认2
+       text: 'Category' // 默认文案 “分类”
+     },
+     nav: [
+      { text: 'TimeLine', link: '/timeline/', icon: 'reco-date' }
+    ],
+     tag: {
+       location: 3,     // 在导航栏菜单中所占的位置，默认3
+       text: 'Tag'      // 默认文案 “标签”
+     }
+   }
+ }  
+}
