@@ -5,7 +5,6 @@ module.exports = {
   description: "记录学习过程",
   theme: "reco",
   evergreen: true,
-  dest: "dist",
   locales: { "/": { lang: "zh-CN" } },
   head: [
     [
