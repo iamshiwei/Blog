@@ -243,21 +243,25 @@ CREATE TABLE IF NOT EXISTS `student`(
 
 DML语言：操作数据库的语言
 
-- insert
+#### 3.3 添加
 
-  ```sql
-  -- 一般写插入语句，一定要数据和字段一一对应
-  INSERT INTO `grade` (gradename) VALUES ('大四')
-  -- 插入多个字段
-  INSERT INTO `grade` (`gradename`) VALUES ('大一'),('大二')
-  INSERT INTO `student` (`name`) VALUES ('张三') 
-  ```
+insert
 
-  **注意事项**
+```sql
+-- 一般写插入语句，一定要数据和字段一一对应
+INSERT INTO `grade` (gradename) VALUES ('大四')
+-- 插入多个字段
+INSERT INTO `grade` (`gradename`) VALUES ('大一'),('大二')
+INSERT INTO `student` (`name`) VALUES ('张三') 
+```
 
-  1. 字段和字段之间使用英文逗号隔开
-  2. 字段是可以省略的，但是后面的值必须要一一对应
-  3. 可以同时插入多条数据，values后面的值，需要使用()隔开即可
+**注意事项**
+
+1. 字段和字段之间使用英文逗号隔开
+2. 字段是可以省略的，但是后面的值必须要一一对应
+3. 可以同时插入多条数据，values后面的值，需要使用()隔开即可
+
+#### 3.4 修改
 
 - update
 
@@ -270,24 +274,86 @@ DML语言：操作数据库的语言
 
   条件：where语句，选择的一段区间，操作符会返回布尔值
 
-  | 操作符 | 含义 | 范围 | 结果 |
-  | :----: | ---- | ---- | :--: |
-  |        |      |      |      |
-  |        |      |      |      |
-  |        |      |      |      |
-  |        |      |      |      |
-  |        |      |      |      |
-  |        |      |      |      |
-  |        |      |      |      |
-  |        |      |      |      |
-  |        |      |      |      |
+|    操作符     | 含义         | 范围  |         结果          |
+| :-----------: | ------------ | ----- | :-------------------: |
+|       =       | 等于         | 5==6  |         false         |
+|      <>       | 不等于       | 5<>6  |         true          |
+|       >       | 大于         | 6>5   |         true          |
+|       <       | 小于         | 6<5   |         false         |
+|      <=       | 小于等于     |       |                       |
+|      >=       | 大于等于     |       |                       |
+| BETWEEN...and | 在某个范围内 | [2,6] | 在2-5之间（包含2、5） |
+|      and      | 和           |       |                       |
+|      or       | 或           |       |                       |
+|               |              |       |                       |
 
-  
+```sql
+	-- 通过多个条件定位数据
+	update `student` set name= 'shiwei' where name = 'lixiao' and sex = '女'	
+```
 
-- delete
 
-#### 3.3 添加
 
-#### 3.4 修改
+语法：**update 表名 set column_name=value,[column_name=value] where [条件]**
+
+注意：
+
+   - colmun_name是数据库的列，尽量带上``
+
+   - 条件：筛选的条件，如果没有指定，则会修改所有的列
+
+   - value：是一个具体的值，也可以是一个变量
+
+```sql
+	update `student` set birthday= current_time where name = 'lixiao' and sex = '女'
+```
 
 #### 3.5 删除
+
+> delete命令
+
+语法：delete from '表名' [where 条件]
+
+```sql
+-- 会全部删除
+delete from `student`;
+
+-- 删除指定数据（避免此种写法）
+delete from `student` where id = 1;
+```
+
+> TRUNCATE
+
+作用:完全清空一个数据库表,表的结构换个索引不会变
+
+> delete 和truncate的区别
+
+	- 相同点:都能删除数据,都不会删除表结构
+ - 不同
+   	- truncate 重新设置自增列,计数器会归零
+   	- truncate不会影响事务
+
+### 4 DQL查询数据(重点)
+
+#### 4.1 DQL
+
+​	(Data query laluage) 数据查询语言
+
+- **数据库最核心的语言,最重要的语句**
+
+#### 4.2 指定查询字段
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
