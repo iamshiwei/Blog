@@ -331,7 +331,7 @@ delete from `student` where id = 1;
 	- 相同点:都能删除数据,都不会删除表结构
  - 不同
    	- truncate 重新设置自增列,计数器会归零
-   	- truncate不会影响事务
+      	- truncate不会影响事务
 
 ### 4 DQL查询数据(重点)
 
@@ -343,17 +343,119 @@ delete from `student` where id = 1;
 
 #### 4.2 指定查询字段
 
+```sql
+-- 查询全部的学生   select 字段 from 表
+select * from `student`
 
+-- 查询指定字段
+SELECT `StudentNo`, `StudentName` FROM student
 
+-- 别名,给结果起一个名字  as  可以给字段起名字,也可以给表起别名
+select `StudentNo` as 学号, `StudentName` as 学生姓名 from student as s;
 
+-- 函数 concat(a, b)
+select concat('姓名:' , StudentName) as 新名字 from student
+```
 
+> 有时候,列的名字不是见名知意,所以需要起一个别名  
 
+> 去重 distinct
 
+​	作用:去除select 查询出来的结果中重复的数据
 
+```sql
+select * from `student`  -- 查询全部的考试成绩
+SELECT studentNo FROM result   -- 查询哪些同学参加了考试
+SELECT DISTINCT studentNo FROM result   -- 发现重复数据,去重
+```
 
+数据库的列
 
+```sql
+select version()  -- 查询mysql版本
+select 100*3   --可以计算
+select @@auto_increment_increment   --查询自增的步长
 
+-- 学员考试 +1 分查看
+select `studentNo`, `studentResult + 1` as '提分后' from student
+```
 
+#### 4.3  where条件子句
 
+作用:检索数据中符合条件的值
 
+```sql
+-- 查询考试成绩在96-100之间的
+select studentNo, studentResult from student where studentResult>96 and studentResult<100  或
+select studentNo, studentResult from student where studentResult>96 && studentResult<100 或
+select studentNo, studentResult from student where studentResult between 95 and 100
+-- 除了1000号学生之外的同学成绩
+select studentNo, studentResult from student where studentNo!=1000
+```
 
+> 模糊查询: 比较运算符
+
+| 运算符      | 语法               | 描述                          |
+| ----------- | ------------------ | ----------------------------- |
+| IS NULL     | a is null          | 如果操作符为null,结果为真     |
+| IS NOT NULL | a is not null      | 如果操作符为not null 结果为真 |
+| between     | a between b and c  | 若a在b和c之间,则返回真        |
+| like        | a like b           | sql匹配,如果a匹配b,则结果为真 |
+| in          | a in (a1,a2,a3...) | 若a在a1/a2其中的一个则返回真  |
+
+```sql
+-- 查询姓刘的同学 
+select studentNo, studentName from student where studentName like '刘%'
+-- 查询姓刘的同学,名字后面只有一个字的
+select studentNo, studentName from student where studentName like '刘_'
+-- 查询姓刘的同学,名字后面只有两个字的
+select studentNo, studentName from student where studentName like '刘__'
+-- 查询名字中间有'嘉'字的同学
+select studentNo, studentName from student where studentName like '%嘉%'
+-- 查询1001,1002,1003号学员
+select studentNo, studentName from student where studentNo in (1001,1002,1003)
+-- 查询在北京的学生
+select studentNo, studentName from student where address in ('北京')
+-- 查询地址为空的学生
+select studentNo, studentName from student where address='' or address is null;
+-- 查询有出生日期的同学  不为空
+select studentNo, studentName from student where birthdate is not null
+
+```
+
+#### 4.4 连表查询
+
+```sql
+-- 查询参加了考试的同学成绩(学号/姓名/科目编号/分数)
+select s.studentNo,studentName,subjectNo,studentResult 
+from student as s inner join result as r where s.studentNo=r.studentNo
+-- right join
+select s.studentNo,studentName,subjectNo,studentResult 
+from student as s right join result as r on s.studentNo=r.studentNo
+-- left join
+select s.studentNo,studentName,subjectNo,studentResult 
+from student as s left join result as r on s.studentNo=r.studentNo
+-- 查询缺缺考的同学
+select s.studentNo,studentName,subjectNo,studentResult 
+from student as s left join result as r 
+where studentResult is null
+```
+
+| 操作       | 描述                                      |
+| ---------- | ----------------------------------------- |
+| inner join | 如果表中至少有一个匹配,就返回行           |
+| left join  | 会从左表中返回所有的值,即使右表中没有匹配 |
+| Right join | 会从右表中返回所有的值,即使左表中没有匹配 |
+
+> 自连接
+
+​				核心:一张表拆为两张一样的表即可
+
+```sql
+-- 查询父子信息
+select a.categoryName as '父栏目',b.categoryName as '子栏目'
+from `category` as a, `category` as b
+where a.categoryid=b.pid
+```
+
+#### 4.5 分页和查询
