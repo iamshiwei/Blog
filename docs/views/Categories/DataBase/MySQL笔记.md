@@ -459,3 +459,17 @@ where a.categoryid=b.pid
 ```
 
 #### 4.5 分页和查询
+
+```sql
+select s.StudentNo,StudentName,subjectName,StudentResult
+from student s
+inner join `result` r
+on s.StudentNo=r.StudentNo
+inner join subject sub
+on r.SubjectNo=sub.SubjectNo
+where subjectName='数据库结构-1'
+order by StudentResult desc
+```
+
+> 分页
+
