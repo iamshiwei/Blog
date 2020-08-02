@@ -472,4 +472,17 @@ order by StudentResult desc
 ```
 
 > 分页
+```sql
+-- 分页,每页显示5条数据
+-- 语法: limit 起始值 页面的大小
+select s.studentNo,studentName,subjectName,studentResult
+from student s
+inner join result r
+on s.studentNo=r.studentNo
+inner join subject sub
+on r.subjectNo=sub.subjectNo
+where subjectName='数据库结构1'
+order by studentResult asc
+limit 5,5
+```
 
