@@ -6,13 +6,13 @@ date: 2020-07-12
 
 tags:
 
-\- 'vim 编辑器'
+- 'vim 编辑器'
 
 categories:
 
-\- 'Tools'
+- 'Tools'
 
-\---
+---
 
 # Vim入门级基础配置-Vim入门教程(1)
 
