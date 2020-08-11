@@ -33,7 +33,7 @@ update mysql.user set authentication_string=passsord('123456') where user='root'
 --------------------------------------------------------------------
 
 -- 所有的语句都以;结尾
-show databases;  -- 查看所有数据库
+show databses;  -- 查看所有数据库
 use 数据库名称;   --使用数据库
 show tables;  -- 查看数据库中所有的表
 describe 数据库名称；-- 显示数据库中所有表的信息
